@@ -18,10 +18,16 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class PersonServiceImpl implements PersonService {
+
+    private final PersonRepository repository;
+
+    private final PersonMapper mapper;
+
     @Autowired
-    private PersonRepository repository;
-    @Autowired
-    private PersonMapper mapper;
+    public PersonServiceImpl(PersonRepository repository, PersonMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
 
     @Override
     public PersonResponseDto save(PersonRequestDto personDto) {

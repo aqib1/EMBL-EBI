@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-03-01T04:13:32+0100",
+    date = "2021-03-03T22:59:54+0100",
     comments = "version: 1.4.1.Final, compiler: javac, environment: Java 15.0.1 (Oracle Corporation)"
 )
 @Component
@@ -25,10 +25,14 @@ public class PersonMapperImpl implements PersonMapper {
 
         PersonResponseDtoBuilder personResponseDto = PersonResponseDto.builder();
 
-        personResponseDto.personId( entity.getId() );
+        if ( entity.getId() != null ) {
+            personResponseDto.personId( entity.getId() );
+        }
         personResponseDto.firstName( entity.getFirstName() );
         personResponseDto.lastName( entity.getLastName() );
-        personResponseDto.age( entity.getAge() );
+        if ( entity.getAge() != null ) {
+            personResponseDto.age( entity.getAge() );
+        }
         personResponseDto.favouriteColor( entity.getFavouriteColor() );
 
         return personResponseDto.build();

@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -30,6 +31,7 @@ public class PersonControllerIT implements JsonHelper {
     private MockMvc mockMvc;
 
     @Test
+    @DirtiesContext
     public void test_ShouldCreatePerson() throws Exception {
         PersonResponseDto request = PersonResponseDto.builder()
                 .firstName(FIRST_NAME)
@@ -48,6 +50,7 @@ public class PersonControllerIT implements JsonHelper {
     }
 
     @Test
+    @DirtiesContext
     public void updatePerson() throws Exception {
         PersonResponseDto request = PersonResponseDto.builder()
                 .firstName(FIRST_NAME)
@@ -66,6 +69,7 @@ public class PersonControllerIT implements JsonHelper {
     }
 
     @Test
+    @DirtiesContext
     public void testDeletePerson() throws Exception {
         mockMvc
                 .perform(MockMvcRequestBuilders.delete(PERSON_ENDPOINT + "/2")
@@ -76,6 +80,7 @@ public class PersonControllerIT implements JsonHelper {
 
 
     @Test
+    @DirtiesContext
     public void testGetPersonShouldReturn() throws Exception {
         MvcResult mvcResult = mockMvc
                 .perform(MockMvcRequestBuilders.get(PERSON_ENDPOINT + "/" + ID)
@@ -91,6 +96,7 @@ public class PersonControllerIT implements JsonHelper {
     }
 
     @Test
+    @DirtiesContext
     public void testGetPersonShouldNotReturn() throws Exception {
         mockMvc
                 .perform(MockMvcRequestBuilders.get(PERSON_ENDPOINT + "/-1" )
@@ -100,6 +106,7 @@ public class PersonControllerIT implements JsonHelper {
     }
 
     @Test
+    @DirtiesContext
     public void getAllPersons() throws Exception {
         MvcResult mvcResult = mockMvc
                 .perform(MockMvcRequestBuilders.get(PERSON_ENDPOINT)
@@ -109,8 +116,8 @@ public class PersonControllerIT implements JsonHelper {
         Assertions.assertNotNull(mvcResult);
         Assertions.assertEquals(HttpStatus.OK, HttpStatus.valueOf(mvcResult.getResponse().getStatus()));
 
-        AllPersonResponse personsDTO = mapFromJson(mvcResult.getResponse().getContentAsString(), AllPersonResponse.class);
-        Assertions.assertFalse(personsDTO.getPersonResponseDtoList().isEmpty());
+        AllPersonResponse response = mapFromJson(mvcResult.getResponse().getContentAsString(), AllPersonResponse.class);
+        Assertions.assertFalse(response.getPersonResponseDtoList().isEmpty());
 
     }
 }

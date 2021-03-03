@@ -1,15 +1,17 @@
 package org.embl.co.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 
 @Data
 @Builder
+@NoArgsConstructor
+@Setter
+@AllArgsConstructor
 public class PersonResponseDto {
 
-    private Integer personId;
+    private int personId;
 
     @JsonProperty("first_name")
     private String firstName;
@@ -17,8 +19,7 @@ public class PersonResponseDto {
     @JsonProperty("last_name")
     private String lastName;
 
-    @JsonProperty("age")
-    private Integer age;
+    private int age;
 
     @JsonProperty("favourite_color")
     private String favouriteColor;
